@@ -9,7 +9,7 @@ import java.util.Date;
 @Data
 @AllArgsConstructor
 @NoArgsConstructor
-public class bookDTO {
+public class BookDTO {
     private Long id;
     private String title;
     private String author;

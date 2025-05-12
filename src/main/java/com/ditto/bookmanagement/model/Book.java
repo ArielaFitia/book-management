@@ -25,5 +25,5 @@ public class Book {
 
     private String description;
 
-    private Date publicationDate;
+    private Date publishedDate;
 }
