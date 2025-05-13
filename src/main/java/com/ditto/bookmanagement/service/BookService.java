@@ -8,61 +8,79 @@ import org.springframework.stereotype.Service;
 
 import java.util.ArrayList;
 import java.util.List;
-import java.util.Optional;
 
 @Service
 public class BookService {
-@Autowired
-private BookRepository bookRepository;
 
-public BookDTO getBookById(Long id) {
-   Book book = bookRepository.findById(id).orElseThrow(() -> new RuntimeException("Book not found") );
-    BookDTO bookDTO = new BookDTO();
-    bookDTO.setTitle(book.getTitle());
-    bookDTO.setAuthor(book.getAuthor());
-    return bookDTO;
-}
+    private final BookRepository bookRepository;
 
-public List<BookDTO> getAllBooks() {
-    BookDTO bookDTO = new BookDTO();
-   return
+    @Autowired
+    public BookService(BookRepository bookRepository) {
+        this.bookRepository = bookRepository;
+    }
 
-}
+    public BookDTO addBook(BookDTO bookDTO) {
+        Book book = new Book();
+        book.setTitle(bookDTO.getTitle());
+        book.setAuthor(bookDTO.getAuthor());
+        book.setDescription(bookDTO.getDescription());
+        book.setPublishedDate(bookDTO.getPublishedDate());
 
-public BookDTO addBook(BookDTO bookDTO){
-    Book book = new Book();
-    book.setAuthor(bookDTO.getAuthor());
-    book.setTitle(bookDTO.getTitle());
+        Book newBook = bookRepository.save(book);
 
-    Book newBook =bookRepository.save(book);
+        BookDTO newBookDTO = new BookDTO();
+        newBookDTO.setTitle(newBook.getTitle());
+        newBookDTO.setAuthor(newBook.getAuthor());
+        newBookDTO.setDescription(newBook.getDescription());
+        newBookDTO.setPublishedDate(newBook.getPublishedDate());
 
-    BookDTO newBookDTO = new BookDTO();
-    newBookDTO.setAuthor(newBook.getAuthor());
-    newBookDTO.setTitle(newBook.getTitle());
+        return newBookDTO;
+    }
 
-    return newBookDTO;
+    public List<BookDTO> getAllBooks() {
+        List<Book> books = bookRepository.findAll();
+        List<BookDTO> bookDTOs = new ArrayList<>();
+        for (Book book : books) {
+            BookDTO bookDTO = new BookDTO();
+            bookDTO.setTitle(book.getTitle());
+            bookDTO.setAuthor(book.getAuthor());
+            bookDTO.setDescription(book.getDescription());
+            bookDTO.setPublishedDate(book.getPublishedDate());
+            bookDTOs.add(bookDTO);
+        }
+        return bookDTOs;
+    }
 
-}
+    public BookDTO getBookById(Long id) {
+        Book book = bookRepository.findById(id).orElseThrow(() -> new RuntimeException("Book not found"));
+        BookDTO bookDTO = new BookDTO();
+        bookDTO.setTitle(book.getTitle());
+        bookDTO.setAuthor(book.getAuthor());
+        bookDTO.setDescription(book.getDescription());
+        bookDTO.setPublishedDate(book.getPublishedDate());
+        return bookDTO;
+    }
 
-public BookDTO updateBook (Long id ,BookDTO bookDTO){
-    Book existingBook= bookRepository.findById(id).orElseThrow(() -> new RuntimeException("Book not found"));
-    existingBook.setAuthor(bookDTO.getAuthor());
-    existingBook.setTitle(bookDTO.getTitle());
+    public BookDTO updateBook(Long id, BookDTO bookDTO) {
+        Book existingBook = bookRepository.findById(id).orElseThrow(() -> new RuntimeException("Book not found"));
+        existingBook.setTitle(bookDTO.getTitle());
+        existingBook.setAuthor(bookDTO.getAuthor());
+        existingBook.setDescription(bookDTO.getDescription());
+        existingBook.setPublishedDate(bookDTO.getPublishedDate());
 
-    bookRepository.save(existingBook);
+        bookRepository.save(existingBook);
 
-    BookDTO updateBookDTO= new BookDTO();
-    updateBookDTO.setId(existingBook.getId());
-    updateBookDTO.setAuthor(existingBook.getAuthor());
-    updateBookDTO.setTitle(existingBook.getTitle());
+        BookDTO updateBookDTO = new BookDTO();
+        updateBookDTO.setTitle(existingBook.getTitle());
+        updateBookDTO.setAuthor(existingBook.getAuthor());
+        updateBookDTO.setDescription(existingBook.getDescription());
+        updateBookDTO.setPublishedDate(existingBook.getPublishedDate());
 
-    return updateBookDTO; }
+        return updateBookDTO;
+    }
 
- public void deleteBook(Long id){
-     Book existingBook = bookRepository.findById(id).orElseThrow(() -> new RuntimeException("Book not found"));
-     bookRepository.delete(existingBook);
-
- }
-
-
+    public void deleteBook(Long id) {
+        Book existingBook = bookRepository.findById(id).orElseThrow(() -> new RuntimeException("Book not found"));
+        bookRepository.delete(existingBook);
+    }
 }
