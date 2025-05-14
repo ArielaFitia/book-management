@@ -29,6 +29,7 @@ public class BookService {
         Book newBook = bookRepository.save(book);
 
         BookDTO newBookDTO = new BookDTO();
+        newBookDTO.setId(newBook.getId());
         newBookDTO.setTitle(newBook.getTitle());
         newBookDTO.setAuthor(newBook.getAuthor());
         newBookDTO.setDescription(newBook.getDescription());
@@ -42,6 +43,7 @@ public class BookService {
         List<BookDTO> bookDTOs = new ArrayList<>();
         for (Book book : books) {
             BookDTO bookDTO = new BookDTO();
+            bookDTO.setId(book.getId());
             bookDTO.setTitle(book.getTitle());
             bookDTO.setAuthor(book.getAuthor());
             bookDTO.setDescription(book.getDescription());
@@ -54,6 +56,7 @@ public class BookService {
     public BookDTO getBookById(Long id) {
         Book book = bookRepository.findById(id).orElseThrow(() -> new RuntimeException("Book not found"));
         BookDTO bookDTO = new BookDTO();
+        bookDTO.setId(book.getId());
         bookDTO.setTitle(book.getTitle());
         bookDTO.setAuthor(book.getAuthor());
         bookDTO.setDescription(book.getDescription());
@@ -71,6 +74,8 @@ public class BookService {
         bookRepository.save(existingBook);
 
         BookDTO updateBookDTO = new BookDTO();
+
+        updateBookDTO.setId(existingBook.getId());
         updateBookDTO.setTitle(existingBook.getTitle());
         updateBookDTO.setAuthor(existingBook.getAuthor());
         updateBookDTO.setDescription(existingBook.getDescription());

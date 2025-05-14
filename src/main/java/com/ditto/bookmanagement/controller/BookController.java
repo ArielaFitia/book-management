@@ -4,6 +4,7 @@ package com.ditto.bookmanagement.controller;
 
 import com.ditto.bookmanagement.dto.BookDTO;
 import com.ditto.bookmanagement.service.BookService;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.web.bind.annotation.*;
 
@@ -14,6 +15,7 @@ import java.util.List;
 public class BookController {
     private final BookService bookService;
 
+    @Autowired
     public BookController(BookService bookService) {
         this.bookService = bookService;
     }
