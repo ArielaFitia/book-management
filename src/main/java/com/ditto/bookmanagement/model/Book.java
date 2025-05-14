@@ -6,7 +6,7 @@ import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
 
-import java.util.Date;
+import java.time.LocalDate;
 
 @Entity
 @Table(name = "books")
@@ -25,5 +25,5 @@ public class Book {
 
     private String description;
 
-    private Date publishedDate;
+    private LocalDate publishedDate;
 }

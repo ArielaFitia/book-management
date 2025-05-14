@@ -1,7 +1,5 @@
 package com.ditto.bookmanagement.controller;
 
-
-
 import com.ditto.bookmanagement.dto.BookDTO;
 import com.ditto.bookmanagement.service.BookService;
 import org.springframework.beans.factory.annotation.Autowired;
